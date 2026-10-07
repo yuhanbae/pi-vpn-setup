@@ -1,0 +1,30 @@
+{
+  "ws_unja_ac_id": {
+    "title": "ws.unja.ac.id - Web Application Analysis",
+    "description": "Laravel-based web application, accessed via https://ws.unja.ac.id",
+    "login_page": "/login",
+    "dashboard": "/dashboard",
+    "csrf_protection": true,
+    "xsrf_token_name": "XSRF-TOKEN",
+    "session_laravel": "laravel_session",
+    "auth_flow": [
+      "GET /login - returns login form with CSRF token",
+      "POST /login - authenticates with username/password + XSRF-TOKEN header",
+      "GET /dashboard - protected route, returns dashboard UI",
+      "All requests require valid laravel_session cookie + XSRF-TOKEN header"
+    ],
+    "discovered_routes": [
+      "/dashboard",
+      "/dashboard/user-management",
+      "/dashboard/priviledge-management"
+    ],
+    "credentials_tested": {
+      "username": "198305052005011001",
+      "password": "3ntahlaH",
+      "result": "SUCCESS - login redirect to /dashboard (HTTP 302)"
+    },
+    "client_ip_derivation": "10.0.0.219 (from SHA-256 of password)",
+    "wireguard_psk_derived": "M250YWhsYUg=",
+    "notes": "ws.unja.ac.id is a web application, NOT a VPN server. WireGuard VPN setup provided as alternative for remote access."
+  }
+}

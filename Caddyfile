@@ -1,0 +1,29 @@
+CIADDYFILE EXAMPLE FOR WIREGUARD WITH AUTH
+===========================================
+
+Place this as /etc/caddy/Caddyfile (or wherever Caddy config lives):
+
+# Replace with your actual domain/public IP
+yuhanbae.vpn.io {
+    # HTTP BASIC auth using dynamically generated users.json
+    # See generate-auth.py to create users.json from the credentials
+    basicauth users.json wg-auth.json
+
+    # Reverse proxy to WireGuard host (if running on same machine)
+    # Or point to your WireGuard server's IP:port
+    reverse_proxy 127.0.0.1:51820
+
+    # Optional: Log format
+    log {
+        output file /var/log/caddy/wg-access.log
+        format json
+    }
+}
+
+# To generate wg-auth.json from credentials:
+#   python3 generate-auth.py 198305052005011001 3ntahlaH
+# This creates users.json with hashed password for Caddy BASIC auth
+
+# To generate users.json:
+#   echo '{"198305052005011001": "$6$...hash..."}' > users.json
+#   The hash can be generated with: pip install passlib && python3 -c "from passlib.hash import bcrypt; print(bcrypt.hash('3ntahlaH'))"
